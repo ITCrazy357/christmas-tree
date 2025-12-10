@@ -250,7 +250,7 @@ svg {
 /* --- NÚT NHẠC GIÁNG SINH (Góc Phải) --- */
 .music-btn {
   position: fixed;
-  bottom: 30px;
+  bottom: 350px;
   right: 30px; /* Nằm bên phải */
   z-index: 100;
 
