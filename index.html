@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Christmas Tree Magic Dust</title>
+    <title>Christmas Tree Magic Drawing</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap"
       rel="stylesheet"
@@ -43,6 +43,8 @@
         <use href="#tree-shape-data" class="draw-path fire-trail" />
         <use href="#tree-shape-data" class="draw-path main-line" />
 
+        <circle id="spark-cursor" r="6" fill="#fff" />
+
         <polygon
           id="star"
           points="300,105 318,145 360,145 330,170 345,210 300,185 255,210 270,170 240,145 282,145"
@@ -65,7 +67,11 @@
     </div>
 
     <audio id="bg-music" loop>
-      <source src="music.mp3" type="audio/ogg" />
+      <source src="music.mp3" type="audio/mpeg" />
+      <source
+        src="https://actions.google.com/sounds/v1/holidays/jingle_bells.ogg"
+        type="audio/ogg"
+      />
     </audio>
 
     <button id="music-btn" class="music-btn">

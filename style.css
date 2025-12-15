@@ -26,7 +26,7 @@ svg {
   max-height: 80vh;
 }
 
-/* === CẤU HÌNH NÉT VẼ (Giữ nguyên) === */
+/* === CẤU HÌNH NÉT VẼ === */
 .draw-path {
   fill: none;
   stroke-linecap: round;
@@ -69,7 +69,62 @@ svg {
   }
 }
 
-/* === NGÔI SAO & CHỮ & TUYẾT (Giữ nguyên) === */
+/* === PHẦN MỚI: ĐẦU BÚT PHÁT SÁNG (SPARK) === */
+#spark-cursor {
+  /* Copy y nguyên path d của cây thông vào đây để nó chạy theo */
+  offset-path: path(
+    "M100 600 Q 290 450 210 450 Q 100 460 260 350 Q 290 330 200 290 Q 250 290 300 150 Q 350 290 400 290 Q 310 330 340 350 Q 500 460 390 450 Q 310 450 500 600"
+  );
+
+  /* Hiệu ứng phát sáng mạnh */
+  fill: #fff;
+  filter: drop-shadow(0 0 5px #fff) drop-shadow(0 0 10px #ffd700)
+    drop-shadow(0 0 20px #ff0000);
+
+  /* Chạy cùng lúc với vẽ cây (10s) */
+  animation: moveSpark 7s ease-in-out forwards;
+  opacity: 1;
+}
+
+/* Ẩn đốm sáng sau khi vẽ xong */
+@keyframes moveSpark {
+  0% {
+    offset-distance: 0%;
+    opacity: 1;
+  }
+  99% {
+    opacity: 1;
+  }
+  100% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+
+/* === BỤI RƠI TỪ ĐẦU BÚT === */
+.drawing-dust {
+  position: absolute;
+  background: #fff;
+  border-radius: 50%;
+  pointer-events: none;
+  box-shadow: 0 0 5px gold;
+  z-index: 10;
+  animation: dustFadeOut 1s linear forwards;
+}
+
+@keyframes dustFadeOut {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+    margin-top: 20px;
+  } /* Rơi nhẹ xuống */
+}
+
+/* === CÁC PHẦN CŨ (Giữ nguyên) === */
 #star {
   fill: gold;
   stroke: #e2b72b;
@@ -132,19 +187,15 @@ svg {
   }
 }
 
-/* =========================================
-   PHẦN MỚI: HIỆU ỨNG BỤI RƠI TỪ NHÁNH CÂY
-========================================= */
+/* Bụi rơi từ nhánh cây (Sau khi vẽ xong) */
 .tree-falling-dust {
   position: absolute;
   background: #fff;
   border-radius: 50%;
-  /* Sử dụng hiệu ứng phát sáng vàng giống bụi Santa */
   box-shadow: 0 0 5px #ffd700, 0 0 10px #ffd700;
   pointer-events: none;
-  z-index: 3; /* Nằm trên cây */
+  z-index: 3;
   opacity: 0;
-  /* Animation rơi xuống */
   animation: dustFallAnimation linear forwards;
 }
 
@@ -155,14 +206,11 @@ svg {
   }
   100% {
     opacity: 0;
-    /* Rơi xuống khoảng 150px và nhỏ lại */
     transform: translateY(150px) scale(0.5);
   }
 }
 
-/* =========================================
-   CÁC NHÂN VẬT HOẠT HÌNH (Giữ nguyên)
-========================================= */
+/* Santa & Quà */
 .santa-container {
   position: fixed;
   top: 10%;
@@ -171,7 +219,7 @@ svg {
   height: 150px;
   z-index: 5;
   pointer-events: none;
-  background-image: url("santa.png"); /* Đảm bảo bạn có file này */
+  background-image: url("santa.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -247,68 +295,50 @@ svg {
   }
 }
 
-/* --- NÚT NHẠC GIÁNG SINH (Góc Phải) --- */
+/* Nút nhạc */
 .music-btn {
   position: fixed;
-  bottom: 350px;
-  right: 30px; /* Nằm bên phải */
+  bottom: 500px;
+  left: 400px;
   z-index: 100;
-
-  /* Hiệu ứng kính mờ (Glassmorphism) */
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
-
-  /* Viền vàng sang trọng */
   border: 1px solid rgba(255, 215, 0, 0.5);
-  border-radius: 50px; /* Bo tròn hình viên thuốc */
-
-  /* Kích thước và khoảng cách */
+  border-radius: 50px;
   padding: 10px 20px;
   display: flex;
   align-items: center;
   gap: 10px;
-
-  /* Font chữ */
-  font-family: "Great Vibes", cursive; /* Font chữ giống tiêu đề */
-  color: #ffd700; /* Màu vàng kim */
+  font-family: "Great Vibes", cursive;
+  color: #ffd700;
   font-size: 1.5rem;
-
   cursor: pointer;
   outline: none;
   transition: all 0.4s ease;
-
-  /* Bóng đổ phát sáng */
   box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
 }
 
 .music-btn .icon {
-  font-size: 1.8rem; /* Icon to hơn chữ một chút */
+  font-size: 1.8rem;
   filter: drop-shadow(0 0 5px gold);
 }
-
-/* Hiệu ứng khi di chuột vào */
 .music-btn:hover {
   background: rgba(255, 215, 0, 0.2);
   border-color: #ffd700;
-  transform: translateY(-5px); /* Nổi lên nhẹ */
+  transform: translateY(-5px);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 0 15px gold;
-  color: #fff; /* Chữ chuyển sang trắng */
+  color: #fff;
 }
-
-/* --- TRẠNG THÁI KHI NHẠC ĐANG PHÁT --- */
 .music-playing {
-  border-color: #ff4500; /* Viền chuyển màu đỏ cam ấm áp */
-  background: rgba(212, 36, 36, 0.2); /* Nền hơi đỏ */
+  border-color: #ff4500;
+  background: rgba(212, 36, 36, 0.2);
   color: #fff;
   box-shadow: 0 0 20px #ff4500;
 }
-
-/* Hiệu ứng rung lắc như chuông reo */
 .music-playing .icon {
   animation: bellRing 2s infinite ease-in-out;
 }
-
 @keyframes bellRing {
   0%,
   100% {
@@ -328,5 +358,224 @@ svg {
   }
   50% {
     transform: rotate(0);
+  }
+}
+/* =========================================
+   ✨ ADD-ON: Aurora + Starfield + Vignette
+   (Dán vào CUỐI style.css)
+========================================= */
+
+/* Đảm bảo layer nền nằm sau SVG */
+.container {
+  isolation: isolate;
+}
+
+#starfield-canvas,
+.aurora-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.aurora-layer {
+  opacity: 0.45;
+  filter: blur(18px) saturate(130%);
+  mix-blend-mode: screen;
+  background: radial-gradient(
+      60% 50% at 20% 30%,
+      rgba(0, 255, 180, 0.35),
+      transparent 60%
+    ),
+    radial-gradient(55% 45% at 70% 35%, rgba(0, 140, 255, 0.3), transparent 62%),
+    radial-gradient(
+      55% 45% at 55% 75%,
+      rgba(255, 70, 170, 0.22),
+      transparent 65%
+    ),
+    radial-gradient(
+      80% 70% at 40% 60%,
+      rgba(255, 215, 0, 0.12),
+      transparent 70%
+    );
+  animation: auroraDrift 14s ease-in-out infinite alternate;
+}
+
+@keyframes auroraDrift {
+  0% {
+    transform: translate(-2%, -1%) scale(1.05) rotate(-1deg);
+  }
+  100% {
+    transform: translate(2%, 1.5%) scale(1.12) rotate(1.5deg);
+  }
+}
+
+/* Vignette viền tối nhẹ cho cinematic */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+  background: radial-gradient(
+    70% 60% at 50% 40%,
+    transparent 55%,
+    rgba(0, 0, 0, 0.45) 100%
+  );
+}
+
+/* Đẩy SVG + chữ + nút lên trên nền */
+#main-svg,
+.title,
+.music-btn {
+  position: relative;
+  z-index: 2;
+}
+
+/* =========================================
+   🎄 ADD-ON: Tree Sway (đung đưa nhẹ)
+========================================= */
+#main-svg {
+  transform-origin: 50% 95%;
+  animation: treeSway 6.5s ease-in-out infinite;
+}
+
+@keyframes treeSway {
+  0%,
+  100% {
+    transform: rotate(-0.6deg);
+  }
+  50% {
+    transform: rotate(0.8deg);
+  }
+}
+
+/* =========================================
+   💡 ADD-ON: Garland Lights (dây đèn theo path)
+========================================= */
+.light-garland {
+  fill: none;
+  stroke-width: 10;
+  stroke-linecap: round;
+  stroke-dasharray: 0.1 22;
+  opacity: 0;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6))
+    drop-shadow(0 0 16px rgba(255, 215, 0, 0.45));
+  animation: garlandIn 1.2s ease 7.8s forwards,
+    garlandTwinkle 2.6s ease-in-out infinite 9.2s;
+}
+
+@keyframes garlandIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes garlandTwinkle {
+  0%,
+  100% {
+    opacity: 0.75;
+    stroke-dashoffset: 0;
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.55))
+      drop-shadow(0 0 16px rgba(255, 215, 0, 0.45));
+  }
+  50% {
+    opacity: 1;
+    stroke-dashoffset: 18;
+    filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.75))
+      drop-shadow(0 0 26px rgba(255, 80, 80, 0.35));
+  }
+}
+
+/* =========================================
+   🎁 ADD-ON: Ornaments (bóng trang trí SVG)
+========================================= */
+.ornament-bulb {
+  opacity: 0;
+  transform-origin: center;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.5))
+    drop-shadow(0 0 14px rgba(255, 215, 0, 0.4));
+  animation: ornamentIn 0.9s ease forwards,
+    ornamentPulse 2.8s ease-in-out infinite;
+}
+
+@keyframes ornamentIn {
+  from {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes ornamentPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.45))
+      drop-shadow(0 0 14px rgba(255, 215, 0, 0.35));
+  }
+  50% {
+    transform: scale(1.12);
+    filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.7))
+      drop-shadow(0 0 26px rgba(255, 215, 0, 0.6));
+  }
+}
+
+/* =========================================
+   ✨ ADD-ON: Message shimmer (chữ lung linh)
+========================================= */
+.title {
+  letter-spacing: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.85),
+    rgba(255, 215, 0, 0.95),
+    rgba(255, 255, 255, 0.85)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: messageGlow 3s ease-in-out infinite;
+}
+
+@keyframes messageGlow {
+  0%,
+  100% {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3),
+      0 0 25px rgba(255, 215, 0, 0.25);
+  }
+  50% {
+    text-shadow: 0 0 14px rgba(255, 255, 255, 0.45),
+      0 0 40px rgba(255, 215, 0, 0.35);
+  }
+}
+
+/* =========================================
+   🎆 ADD-ON: Final sparkle burst particles
+========================================= */
+.final-spark {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.85));
+  animation: pop 900ms ease-out forwards;
+}
+
+@keyframes pop {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--dx), var(--dy)) scale(0.2);
+    opacity: 0;
   }
 }
