@@ -99,10 +99,17 @@ setInterval(createSnowflake, 150);
 
 // --- CHỮ ---
 const messages = [
-  "Merry Christmas",
-  "Happy New Year 2026",
-  "Peace & Joy",
-  "From Gemini with Love",
+  "Chúc em thi tốt nhe",
+  "Chúc em học bài nhìn là thuộc",
+  "Lụi là trúng",
+  "Nhớ bài dai như đĩa...",
+  "Mong ông trời phù hộ độ trì",
+  "Cho em vượt qua môn =))",
+  "Và có kết quả cao ngút trời =))",
+  "Đón một cái tết thật ngon",
+  "Và vui vẻ ",
+  "Chúc em may mắn",
+  "Good Luck",
 ];
 let index = 0;
 const messageEl = document.getElementById("message");
