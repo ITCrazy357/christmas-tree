@@ -298,8 +298,8 @@ svg {
 /* Nút nhạc */
 .music-btn {
   position: fixed;
-  bottom: 500px;
-  left: 400px;
+  bottom: 580px;
+  left: 170px;
   z-index: 100;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(5px);
